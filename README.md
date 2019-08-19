@@ -1,68 +1,30 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Desafio Front-End EWALLY
 
-## Available Scripts
+## Documentação da API
 
-In the project directory, you can run:
+A documentação das nossas apis se encontra em https://docs.apidev.ewally.com.br/apis.
+Essa documentação é bem extensa, pois inclui todas as nossas apis públicas. Para esse teste você precisará de apenas algumas delas.
 
-### `npm start`
+## Criação de tela de Login
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+O portal deve solicitar ao usuário um nome de usuário e senha. A API que deve ser utilizada está em Ewally User Management API /login.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- O username que deve ser utilizado para os testes é testFrontEwally
+- A senha desse usuário é 123456
+- O token retornado nessa chamada deve ser utilizado em todas as requisições seguintes. Ele deve ser enviado no header Authorization, no formato Bearer {{token}}
+- O token expira em 15 minutos se não for utilizado, mas a cada chamada de api esse tempo é renovado. Se o token vencer, qualquer rota retornará o erro 110 - Sessão expirada. Por favor faça login novamente. Se isso acontecer, basta refazer o login e usar um token novo. Não é necessário para o teste se preocupar com isso; esses casos e fluxos podem ser desconsiderados.
 
-### `npm test`
+## Criação de telas de consulta de saldo e extrato
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Após realizado login com sucesso, o usuário deve ser direcionado para uma tela onde poderá ver o seu saldo e extrato.
 
-### `npm run build`
+A API de consulta de saldo está em Ewally Account Management /account/balance
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Só deve ser mostrado o saldo disponível (não o blockedBalance).
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+A API de consulta de extrato está em Ewally B2B /b2b/statement
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- O usuário deve ver uma lista com informações reduzidas do extrato: apenas data, amount e operationType
+- Para esse teste, alguns registros de transações podem ser encontrados ao se utilizar initialDate=2019-01-01 e finalDate=2019-01-31
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Todos os valores das apis da Ewally são em centavos. {"amount":500, "balance":4015} significa um valor de R$ 5,00 e um saldo de R$ 40,15
